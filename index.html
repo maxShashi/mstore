@@ -149,13 +149,8 @@
   .testimonials-wrap::after{left:0;background:linear-gradient(to right,var(--bg),transparent)}
   .marquee-track{
     display:flex;gap:16px;
-    animation:marquee 28s linear infinite;
     width:max-content;
-  }
-  .marquee-track:hover{animation-play-state:paused}
-  @keyframes marquee{
-    0%{transform:translateX(0)}
-    100%{transform:translateX(-50%)}
+    will-change:transform;
   }
   .tcard{
     width:260px;flex-shrink:0;
@@ -279,7 +274,7 @@
       <div class="stat-lbl">معدل الرضا</div>
     </div>
     <div>
-      <div class="stat-num gold">48h</div>
+      <div class="stat-num gold">24h</div>
       <div class="stat-lbl">للإطلاق</div>
     </div>
   </div>
@@ -318,7 +313,7 @@
         <div class="step-num">٢</div>
         <div>
           <div class="step-title">نفتح متجرك الإلكتروني</div>
-          <div class="step-desc">نتولى كل الإجراءات التقنية ونُنشئ متجرك الاحترافي على المنصة التي تختارها خلال 48 ساعة</div>
+          <div class="step-desc">نتولى كل الإجراءات التقنية ونُنشئ متجرك الاحترافي على المنصة التي تختارها خلال 24 ساعة</div>
         </div>
       </div>
       <div class="step">
@@ -434,18 +429,19 @@
 
 // ── TESTIMONIALS DATA ──
 const TESTIMONIALS = [
-  {init:'ي',name:'يوسف العمراني',city:'الدار البيضاء',earning:'4,200 درهم/شهر',text:'"بدأت من الصفر وهم ساعدوني في كل شيء. الآن دخلي اليومي يتجاوز 140 درهم بشكل ثابت."'},
-  {init:'ف',name:'فاطمة الزهراء',city:'الرباط',earning:'3,800 درهم/شهر',text:'"لم أكن أعرف شيئاً عن التجارة الإلكترونية. الآن متجري يعمل وأنا مرتاحة في بيتي."'},
-  {init:'م',name:'محمد البوعناني',city:'مراكش',earning:'5,100 درهم/شهر',text:'"أحسن قرار اتخذته هذه السنة. الفريق محترف جداً والدعم مستمر حتى بعد الإطلاق."'},
-  {init:'س',name:'سارة المنصوري',city:'فاس',earning:'2,900 درهم/شهر',text:'"في أقل من أسبوع كان متجري جاهزاً. الآن أبيع كل يوم وأنا في المنزل."'},
-  {init:'أ',name:'أحمد التازي',city:'طنجة',earning:'6,500 تركت وظيفتي',text:'"تركت وظيفتي بعد 3 أشهر فقط. دخلي من المتجر أصبح ضعف راتبي السابق."'},
-  {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'3,200 درهم/شهر',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر كل شيء صار سهل وواضح."'},
+  {init:'ي',name:'يوسف العمراني',city:'الدار البيضاء',earning:'4,800 درهم/شهر',text:'"بدأت من الصفر وهم ساعدوني في كل شيء. الآن دخلي اليومي يتجاوز 160 درهم بشكل ثابت."'},
+  {init:'ف',name:'فاطمة الزهراء',city:'الرباط',earning:'5,200 درهم/شهر',text:'"لم أكن أعرف شيئاً عن التجارة الإلكترونية. الآن متجري يعمل وأنا مرتاحة في بيتي."'},
+  {init:'م',name:'محمد البوعناني',city:'مراكش',earning:'7,100 درهم/شهر',text:'"أحسن قرار اتخذته هذه السنة. الفريق محترف جداً والدعم مستمر حتى بعد الإطلاق."'},
+  {init:'س',name:'سارة المنصوري',city:'فاس',earning:'4,600 درهم/شهر',text:'"في أقل من أسبوع كان متجري جاهزاً. الآن أبيع كل يوم وأنا في المنزل."'},
+  {init:'أ',name:'أحمد التازي',city:'طنجة',earning:'9,000 درهم/شهر',text:'"تركت وظيفتي بعد 3 أشهر فقط. دخلي من المتجر أصبح ضعف راتبي السابق."'},
+  {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'5,500 درهم/شهر',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر كل شيء صار سهل وواضح."'},
 ];
 
-// Build marquee (duplicated for infinite scroll)
+// Build marquee — JS-driven infinite loop (no CSS animation jump)
 const track = document.getElementById('marquee');
-const allCards = [...TESTIMONIALS, ...TESTIMONIALS];
-allCards.forEach(t => {
+const GAP = 16; // matches CSS gap
+
+function buildCard(t) {
   const div = document.createElement('div');
   div.className = 'tcard';
   div.innerHTML = `
@@ -459,8 +455,34 @@ allCards.forEach(t => {
       </div>
     </div>
     <div class="tcard-text">${t.text}</div>`;
-  track.appendChild(div);
-});
+  return div;
+}
+
+// Fill track with 3 copies so there's always content on screen
+[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
+
+// Remove CSS animation, drive via rAF
+track.style.animation = 'none';
+track.style.transform = 'translateX(0)';
+
+let offset = 0;
+const SPEED = 0.6; // px per frame
+let paused = false;
+track.addEventListener('mouseenter', () => paused = true);
+track.addEventListener('mouseleave', () => paused = false);
+
+function tickMarquee() {
+  if (!paused) {
+    offset += SPEED;
+    // width of one "set" = N cards * (card width + gap)
+    const cardW = track.firstElementChild ? track.firstElementChild.offsetWidth + GAP : 276;
+    const setW = TESTIMONIALS.length * cardW;
+    if (offset >= setW) offset -= setW; // seamless reset
+    track.style.transform = `translateX(-${offset}px)`;
+  }
+  requestAnimationFrame(tickMarquee);
+}
+requestAnimationFrame(tickMarquee);
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
