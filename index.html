@@ -150,7 +150,12 @@
   .marquee-track{
     display:flex;gap:16px;
     width:max-content;
-    will-change:transform;
+    animation:marquee-scroll 32s linear infinite;
+  }
+  .marquee-track:hover{animation-play-state:paused}
+  @keyframes marquee-scroll{
+    0%  {transform:translateX(0)}
+    100%{transform:translateX(-50%)}
   }
   .tcard{
     width:260px;flex-shrink:0;
@@ -458,35 +463,8 @@ function buildCard(t) {
   return div;
 }
 
-// Fill track with 3 copies so there's always content on screen
-[...TESTIMONIALS, ...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
-
-// Remove CSS animation, drive via rAF
-track.style.animation = 'none';
-track.style.transform = 'translateX(0)';
-
-let offset = 0;
-const SPEED = 0.6;
-let paused = false;
-let setW = 0;
-
-track.addEventListener('mouseenter', () => paused = true);
-track.addEventListener('mouseleave', () => paused = false);
-
-function tickMarquee() {
-  // Measure once after first paint
-  if (!setW && track.firstElementChild) {
-    const cardW = track.firstElementChild.getBoundingClientRect().width;
-    setW = TESTIMONIALS.length * (cardW + GAP);
-  }
-  if (!paused && setW) {
-    offset += SPEED;
-    if (offset >= setW) offset -= setW;
-    track.style.transform = `translateX(-${offset}px)`;
-  }
-  requestAnimationFrame(tickMarquee);
-}
-requestAnimationFrame(tickMarquee);
+// Two copies — CSS animation goes 0 → -50% = exactly one set, seamless loop
+[...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
