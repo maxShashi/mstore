@@ -29,30 +29,37 @@
   .container{max-width:480px;margin:0 auto;padding:0 20px}
   .badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:700;border:1px solid var(--gold3);color:var(--gold2);background:rgba(212,175,55,.08);letter-spacing:.5px}
 
-  /* ── TOP BAR ── */
-  .topbar{
-    position:fixed;top:0;right:0;left:0;z-index:100;
-    padding:12px 20px;
-    display:flex;align-items:center;justify-content:space-between;
-    background:rgba(13,13,13,.92);
-    backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--border);
+  /* ── NOTICE TICKER ── */
+  .notice-ticker{
+    background:rgba(37,211,102,.08);
+    border-bottom:1px solid rgba(37,211,102,.2);
+    padding:10px 16px;
+    text-align:center;
+    font-size:13px;
+    color:#fff;
+    overflow:hidden;
+    min-height:42px;
+    display:flex;align-items:center;justify-content:center;
+    direction:rtl;
   }
-  .topbar-logo{font-size:18px;font-weight:900;line-height:1}
-  .topbar-wa{
-    display:flex;align-items:center;gap:8px;
-    background:var(--wa);color:#fff;
-    border:none;border-radius:50px;
-    padding:8px 18px;font-size:14px;font-weight:700;
-    cursor:pointer;text-decoration:none;
-    font-family:'Cairo',Arial,sans-serif;
-    white-space:nowrap;
+  .notice-inner{
+    display:inline-flex;align-items:center;gap:8px;
+    animation:tickerFade .5s ease;
   }
-  .topbar-wa svg{width:18px;height:18px;flex-shrink:0}
+  @keyframes tickerFade{
+    from{opacity:0;transform:translateY(8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .notice-dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--wa);flex-shrink:0;
+    animation:blink 1.2s infinite;
+  }
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
   /* ── HERO ── */
   .hero{
-    min-height:100vh;padding-top:80px;
+    min-height:100vh;padding-top:0;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
     position:relative;overflow:hidden;
@@ -62,6 +69,12 @@
   #hero-canvas{
     position:absolute;inset:0;width:100%;height:100%;
     pointer-events:none;z-index:0;
+  }
+  .hero-main-img{
+    width:100%;display:block;
+    mask-image:linear-gradient(to bottom,black 0%,black 75%,transparent 100%);
+    -webkit-mask-image:linear-gradient(to bottom,black 0%,black 75%,transparent 100%);
+    position:relative;z-index:1;
   }
   .hero>.container{position:relative;z-index:1}
   .hero-badge{margin-bottom:20px;animation:fadeDown .6s ease}
@@ -218,26 +231,19 @@
 </head>
 <body>
 
-<!-- TOP BAR -->
-<header class="topbar">
-  <div class="topbar-logo"><span class="gold">متجرك</span></div>
-  <a class="topbar-wa" href="https://wa.me/212600000000?text=مرحباً،%20أريد%20فتح%20متجر%20إلكتروني" target="_blank" rel="noopener">
-    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.523 5.855L.057 23.428a.5.5 0 00.609.61l5.68-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.951 0-3.793-.5-5.405-1.375l-.387-.216-4.01 1.052 1.027-3.908-.233-.401A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
-    واتساب
-  </a>
-</header>
+<!-- NOTICE TICKER -->
+<div class="notice-ticker" id="noticeTicker">
+  <div class="notice-inner" id="noticeInner">
+    <div class="notice-dot"></div>
+    <span id="noticeText">جاري التحميل...</span>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
+  <img src="hero_main.png" class="hero-main-img" alt="" loading="eager" decoding="async">
   <div class="container">
-    <div class="hero-platform-banner reveal" style="margin-bottom:22px;
-      mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);
-      -webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);">
-      <img src="banner_final.jpg" alt="SOUQ eBay JUMIA SHEIN TEMU"
-        style="width:100%;display:block;margin:0 auto;"
-        loading="eager" decoding="async">
-    </div>
     <div class="hero-badge reveal"><span class="badge">🇲🇦 المغرب · فرصة حقيقية</span></div>
     <h1 class="hero-title reveal">
       افتح <span class="gold">متجرك الإلكتروني</span><br>وابدأ الربح اليوم
@@ -506,6 +512,48 @@ const statsObs = new IntersectionObserver(([e]) => {
   }
 }, {threshold: 0.5});
 if(statsEl) statsObs.observe(statsEl);
+
+// ── NOTICE TICKER: 60 Morocco phone numbers rotating every 6s ──
+(function(){
+  const PHONES = [
+    '+212 061-***-283','+212 067-***-514','+212 062-***-739','+212 068-***-061','+212 063-***-427',
+    '+212 071-***-852','+212 064-***-193','+212 072-***-346','+212 065-***-671','+212 073-***-918',
+    '+212 066-***-254','+212 074-***-583','+212 061-***-097','+212 075-***-412','+212 062-***-768',
+    '+212 076-***-135','+212 063-***-894','+212 077-***-267','+212 064-***-531','+212 078-***-649',
+    '+212 065-***-372','+212 079-***-816','+212 066-***-043','+212 071-***-759','+212 067-***-281',
+    '+212 072-***-604','+212 068-***-937','+212 073-***-158','+212 069-***-423','+212 074-***-876',
+    '+212 061-***-542','+212 075-***-319','+212 062-***-687','+212 076-***-204','+212 063-***-951',
+    '+212 077-***-738','+212 064-***-162','+212 078-***-495','+212 065-***-823','+212 079-***-317',
+    '+212 066-***-074','+212 071-***-638','+212 067-***-952','+212 072-***-481','+212 068-***-716',
+    '+212 073-***-239','+212 069-***-587','+212 074-***-143','+212 061-***-869','+212 075-***-452',
+    '+212 062-***-317','+212 076-***-894','+212 063-***-561','+212 077-***-028','+212 064-***-743',
+    '+212 078-***-196','+212 065-***-437','+212 079-***-652','+212 066-***-381','+212 071-***-924'
+  ];
+
+  // Shuffle once
+  for(let i = PHONES.length-1; i > 0; i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [PHONES[i], PHONES[j]] = [PHONES[j], PHONES[i]];
+  }
+
+  let idx = 0;
+  const textEl = document.getElementById('noticeText');
+  const innerEl = document.getElementById('noticeInner');
+
+  function showNext(){
+    const phone = PHONES[idx % PHONES.length];
+    const mins = 2 + Math.floor(Math.random()*48); // 2–49
+    textEl.textContent = `مستخدم ${phone} قام بالاستفسار منذ ${mins} دقيقة`;
+    // restart fade animation
+    innerEl.style.animation = 'none';
+    void innerEl.offsetWidth; // reflow
+    innerEl.style.animation = 'tickerFade .5s ease';
+    idx++;
+  }
+
+  showNext();
+  setInterval(showNext, 6000);
+})();
 </script>
 </body>
 </html>
