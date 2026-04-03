@@ -461,25 +461,23 @@ function buildCard(t){
   return d;
 }
 
-// Render first set, measure, then duplicate
+// Render 1 set first, measure exact width on this device, then fill 4 sets total
 TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
 
-requestAnimationFrame(() => {
-  requestAnimationFrame(() => {
-    const oneW = track.scrollWidth; // exact width of 6 cards on THIS device
-    TESTIMONIALS.forEach(t => track.appendChild(buildCard(t))); // add 2nd set
+requestAnimationFrame(() => requestAnimationFrame(() => {
+  const oneW = track.scrollWidth; // exact px width of 6 cards on this device
+  // Add 3 more sets → 4 total, guarantees seamless on any screen width
+  for(let i=0;i<3;i++) TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
 
-    let x = 0;
-    const SPEED = 1.2; // px per frame
-    function tick(){
-      x += SPEED;
-      if(x >= oneW) x -= oneW; // seamless: jump back by exactly one set
-      track.style.transform = `translateX(-${x}px)`;
-      requestAnimationFrame(tick);
-    }
-    tick();
-  });
-});
+  let x = 0;
+  function tick(){
+    x += 1.5;
+    if(x >= oneW) x -= oneW;
+    track.style.transform = `translateX(-${x}px)`;
+    requestAnimationFrame(tick);
+  }
+  tick();
+}));
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
