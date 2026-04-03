@@ -149,12 +149,11 @@
   .testimonials-wrap::after{left:0;background:linear-gradient(to right,var(--bg),transparent)}
   .marquee-track{
     display:flex;
-    width:max-content;
     animation:marquee-go 24s linear infinite;
   }
   @keyframes marquee-go{
-    0%  { transform:translateX(0); }
-    100%{ transform:translateX(-1656px); }
+    from{ transform:translateX(0); }
+    to  { transform:translateX(-50%); }
   }
   .tcard{
     width:260px;flex-shrink:0;
