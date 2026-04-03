@@ -59,12 +59,9 @@
     background:var(--bg);
     padding-bottom:40px;
   }
-  .hero-img{
+  #hero-canvas{
     position:absolute;inset:0;width:100%;height:100%;
-    object-fit:cover;object-position:center top;
-    opacity:.25;pointer-events:none;
-    mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 50%,transparent 100%);
-    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 50%,transparent 100%);
+    pointer-events:none;z-index:0;
   }
   .hero>.container{position:relative;z-index:1}
   .hero-badge{margin-bottom:20px;animation:fadeDown .6s ease}
@@ -230,7 +227,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <img class="hero-img" src="hero.jpg" alt="" loading="eager" decoding="async">
+  <canvas id="hero-canvas"></canvas>
   <div class="container">
     <div class="hero-badge reveal"><span class="badge">🇲🇦 المغرب · فرصة حقيقية</span></div>
     <h1 class="hero-title reveal">
@@ -364,6 +361,70 @@
 </div>
 
 <script>
+// ── HERO CANVAS: falling coins & bags ──
+(function(){
+  const canvas = document.getElementById('hero-canvas');
+  const ctx = canvas.getContext('2d');
+  const EMOJIS = ['🪙','🪙','🪙','💰','🛍️','🛍️','✨'];
+  const PARTICLES = [];
+  const COUNT = 28;
+
+  function resize(){
+    canvas.width  = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function rand(min, max){ return min + Math.random()*(max-min); }
+
+  function spawn(){
+    const em = EMOJIS[Math.floor(Math.random()*EMOJIS.length)];
+    const size = rand(18, 38);
+    return {
+      em, size,
+      x: rand(0, canvas.width),
+      y: rand(-canvas.height, -size),
+      vy: rand(0.6, 1.8),          // fall speed
+      vx: rand(-0.3, 0.3),         // slight drift
+      rot: rand(0, Math.PI*2),
+      rotSpeed: rand(-0.02, 0.02),
+      alpha: rand(0.45, 0.85),
+    };
+  }
+
+  for(let i=0; i<COUNT; i++){
+    const p = spawn();
+    p.y = rand(-canvas.height, canvas.height); // stagger initial positions
+    PARTICLES.push(p);
+  }
+
+  function draw(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    for(const p of PARTICLES){
+      ctx.save();
+      ctx.globalAlpha = p.alpha;
+      ctx.font = `${p.size}px serif`;
+      ctx.textBaseline = 'middle';
+      ctx.textAlign = 'center';
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillText(p.em, 0, 0);
+      ctx.restore();
+
+      p.x   += p.vx;
+      p.y   += p.vy;
+      p.rot += p.rotSpeed;
+
+      if(p.y > canvas.height + 40){
+        Object.assign(p, spawn());
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
 // ── TESTIMONIALS DATA ──
 const TESTIMONIALS = [
   {init:'ي',name:'يوسف العمراني',city:'الدار البيضاء',earning:'4,200 درهم/شهر',text:'"بدأت من الصفر وهم ساعدوني في كل شيء. الآن دخلي اليومي يتجاوز 140 درهم بشكل ثابت."'},
