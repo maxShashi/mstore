@@ -55,11 +55,18 @@
     min-height:100vh;padding-top:80px;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
     text-align:center;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%,rgba(212,175,55,.12) 0%,transparent 70%),
-      var(--bg);
+    position:relative;overflow:hidden;
+    background:var(--bg);
     padding-bottom:40px;
   }
+  .hero-img{
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover;object-position:center top;
+    opacity:.25;pointer-events:none;
+    mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 50%,transparent 100%);
+    -webkit-mask-image:linear-gradient(to bottom,rgba(0,0,0,.9) 0%,rgba(0,0,0,.6) 50%,transparent 100%);
+  }
+  .hero>.container{position:relative;z-index:1}
   .hero-badge{margin-bottom:20px;animation:fadeDown .6s ease}
   .hero-title{
     font-size:clamp(32px,8vw,52px);font-weight:900;
@@ -223,6 +230,7 @@
 
 <!-- HERO -->
 <section class="hero">
+  <img class="hero-img" src="hero.jpg" alt="" loading="eager" decoding="async">
   <div class="container">
     <div class="hero-badge reveal"><span class="badge">🇲🇦 المغرب · فرصة حقيقية</span></div>
     <h1 class="hero-title reveal">
