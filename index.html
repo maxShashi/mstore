@@ -141,21 +141,23 @@
   .step-desc{font-size:13px;color:var(--muted);line-height:1.6}
 
   /* ── TESTIMONIALS MARQUEE ── */
-  .testimonials-wrap{overflow:hidden;padding:8px 0;position:relative}
-  .testimonials-wrap::before,.testimonials-wrap::after{
-    content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;
+  .testimonials-wrap{
+    overflow:hidden;
+    padding:8px 0;
+    position:relative;
+    direction:ltr;
   }
-  .testimonials-wrap::before{right:0;background:linear-gradient(to left,var(--bg),transparent)}
-  .testimonials-wrap::after{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+  .testimonials-wrap::before,
+  .testimonials-wrap::after{
+    content:'';position:absolute;top:0;bottom:0;width:50px;z-index:2;pointer-events:none;
+  }
+  .testimonials-wrap::before{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+  .testimonials-wrap::after{right:0;background:linear-gradient(to left,var(--bg),transparent)}
   .marquee-track{
     display:flex;
     width:max-content;
-    animation:marquee-go 10s linear infinite;
   }
-  @keyframes marquee-go{
-    from{ transform:translateX(0); }
-    to  { transform:translateX(-50%); }
-  }
+  .tcard{ direction:rtl; }
   .tcard{
     width:260px;flex-shrink:0;
     margin-right:16px;
@@ -339,9 +341,7 @@
     <div class="section-sub">آراء حقيقية من مغاربة حققوا نتائج</div>
   </div>
   <div class="testimonials-wrap">
-    <div class="marquee-track" id="marquee">
-      <!-- cards duplicated in JS for infinite loop -->
-    </div>
+    <div class="marquee-track" id="marquee"></div>
   </div>
 </section>
 
@@ -442,13 +442,12 @@ const TESTIMONIALS = [
   {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'900 درهم/يوم',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر صرت أربح 900 درهم كل يوم بكل سهولة."'},
 ];
 
-// Build marquee: 12 cards (2 sets) rendered synchronously, CSS handles loop
 const track = document.getElementById('marquee');
 
-function buildCard(t) {
-  const div = document.createElement('div');
-  div.className = 'tcard';
-  div.innerHTML = `
+function buildCard(t){
+  const d = document.createElement('div');
+  d.className = 'tcard';
+  d.innerHTML = `
     <div class="stars">★★★★★</div>
     <div class="tcard-top">
       <div class="tcard-avatar">${t.init}</div>
@@ -459,10 +458,28 @@ function buildCard(t) {
       </div>
     </div>
     <div class="tcard-text">${t.text}</div>`;
-  return div;
+  return d;
 }
 
-[...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
+// Render first set, measure, then duplicate
+TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
+
+requestAnimationFrame(() => {
+  requestAnimationFrame(() => {
+    const oneW = track.scrollWidth; // exact width of 6 cards on THIS device
+    TESTIMONIALS.forEach(t => track.appendChild(buildCard(t))); // add 2nd set
+
+    let x = 0;
+    const SPEED = 1.2; // px per frame
+    function tick(){
+      x += SPEED;
+      if(x >= oneW) x -= oneW; // seamless: jump back by exactly one set
+      track.style.transform = `translateX(-${x}px)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+  });
+});
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
