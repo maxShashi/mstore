@@ -150,6 +150,11 @@
   .marquee-track{
     display:flex;
     width:max-content;
+    animation:marquee-go 24s linear infinite;
+  }
+  @keyframes marquee-go{
+    0%  { transform:translateX(0); }
+    100%{ transform:translateX(-1656px); }
   }
   .tcard{
     width:260px;flex-shrink:0;
@@ -437,9 +442,8 @@ const TESTIMONIALS = [
   {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'900 درهم/يوم',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر صرت أربح 900 درهم كل يوم بكل سهولة."'},
 ];
 
-// Build marquee — JS-driven infinite loop (no CSS animation jump)
+// Build marquee: 12 cards (2 sets) rendered synchronously, CSS handles loop
 const track = document.getElementById('marquee');
-const GAP = 16; // matches CSS gap
 
 function buildCard(t) {
   const div = document.createElement('div');
@@ -458,23 +462,7 @@ function buildCard(t) {
   return div;
 }
 
-// Step 1: render first set only
-TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
-
-// Step 2: after paint, measure real width, then append second set and start loop
-setTimeout(() => {
-  const oneSetW = track.scrollWidth; // exact pixel width of 6 cards
-  TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
-
-  let x = 0;
-  function tick() {
-    x += 0.5;
-    if (x >= oneSetW) x = 0;
-    track.style.transform = `translateX(-${x}px)`;
-    requestAnimationFrame(tick);
-  }
-  requestAnimationFrame(tick);
-}, 200);
+[...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
