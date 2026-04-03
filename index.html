@@ -466,18 +466,22 @@ track.style.animation = 'none';
 track.style.transform = 'translateX(0)';
 
 let offset = 0;
-const SPEED = 0.6; // px per frame
+const SPEED = 0.6;
 let paused = false;
+let setW = 0;
+
 track.addEventListener('mouseenter', () => paused = true);
 track.addEventListener('mouseleave', () => paused = false);
 
 function tickMarquee() {
-  if (!paused) {
+  // Measure once after first paint
+  if (!setW && track.firstElementChild) {
+    const cardW = track.firstElementChild.getBoundingClientRect().width;
+    setW = TESTIMONIALS.length * (cardW + GAP);
+  }
+  if (!paused && setW) {
     offset += SPEED;
-    // width of one "set" = N cards * (card width + gap)
-    const cardW = track.firstElementChild ? track.firstElementChild.offsetWidth + GAP : 276;
-    const setW = TESTIMONIALS.length * cardW;
-    if (offset >= setW) offset -= setW; // seamless reset
+    if (offset >= setW) offset -= setW;
     track.style.transform = `translateX(-${offset}px)`;
   }
   requestAnimationFrame(tickMarquee);
