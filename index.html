@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0d0d0d">
+<title>افتح متجرك الإلكتروني | ربح يومي 500-5000 درهم</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  :root{
+    --gold:#D4AF37;--gold2:#F5D76E;--gold3:#8B6914;
+    --bg:#0D0D0D;--bg2:#141414;--bg3:#1C1C1C;
+    --text:#FFFFFF;--muted:#888;--border:#2a2a2a;
+    --wa:#25D366;--wa2:#128C7E;
+    --radius:16px;
+  }
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Cairo',Arial,sans-serif;
+    font-size:16px;line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  /* ── UTILITIES ── */
+  .gold{background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .container{max-width:480px;margin:0 auto;padding:0 20px}
+  .badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:700;border:1px solid var(--gold3);color:var(--gold2);background:rgba(212,175,55,.08);letter-spacing:.5px}
+
+  /* ── TOP BAR ── */
+  .topbar{
+    position:fixed;top:0;right:0;left:0;z-index:100;
+    padding:12px 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(13,13,13,.92);
+    backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-logo{font-size:18px;font-weight:900;line-height:1}
+  .topbar-wa{
+    display:flex;align-items:center;gap:8px;
+    background:var(--wa);color:#fff;
+    border:none;border-radius:50px;
+    padding:8px 18px;font-size:14px;font-weight:700;
+    cursor:pointer;text-decoration:none;
+    font-family:'Cairo',Arial,sans-serif;
+    white-space:nowrap;
+  }
+  .topbar-wa svg{width:18px;height:18px;flex-shrink:0}
+
+  /* ── HERO ── */
+  .hero{
+    min-height:100vh;padding-top:80px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%,rgba(212,175,55,.12) 0%,transparent 70%),
+      var(--bg);
+    padding-bottom:40px;
+  }
+  .hero-badge{margin-bottom:20px;animation:fadeDown .6s ease}
+  .hero-title{
+    font-size:clamp(32px,8vw,52px);font-weight:900;
+    line-height:1.2;margin-bottom:16px;
+    animation:fadeDown .7s ease;
+  }
+  .hero-sub{
+    font-size:clamp(16px,4vw,22px);color:var(--muted);
+    margin-bottom:28px;animation:fadeDown .8s ease;
+  }
+  .hero-earnings{
+    display:flex;align-items:center;justify-content:center;gap:12px;
+    margin-bottom:36px;animation:fadeDown .9s ease;
+  }
+  .earning-pill{
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:12px;padding:14px 24px;text-align:center;
+  }
+  .earning-pill .amount{font-size:28px;font-weight:900}
+  .earning-pill .label{font-size:11px;color:var(--muted);margin-top:2px}
+  .earning-arrow{font-size:24px;color:var(--gold)}
+  .hero-cta{animation:fadeDown 1s ease}
+  .btn-wa{
+    display:inline-flex;align-items:center;gap:10px;
+    background:linear-gradient(135deg,#25D366,#128C7E);
+    color:#fff;font-family:'Cairo',Arial,sans-serif;
+    font-size:18px;font-weight:800;
+    border:none;border-radius:50px;
+    padding:16px 36px;cursor:pointer;text-decoration:none;
+    box-shadow:0 8px 32px rgba(37,211,102,.35);
+    transition:transform .2s,box-shadow .2s;
+  }
+  .btn-wa:active{transform:scale(.97)}
+  .btn-wa svg{width:24px;height:24px;flex-shrink:0}
+  .hero-note{margin-top:14px;font-size:12px;color:var(--muted)}
+
+  /* ── STATS STRIP ── */
+  .stats{
+    background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);
+    padding:24px 20px;
+  }
+  .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:480px;margin:0 auto;text-align:center}
+  .stat-num{font-size:26px;font-weight:900}
+  .stat-lbl{font-size:11px;color:var(--muted);margin-top:3px}
+
+  /* ── PLATFORMS ── */
+  .section{padding:48px 20px}
+  .section-title{text-align:center;font-size:22px;font-weight:800;margin-bottom:8px}
+  .section-sub{text-align:center;color:var(--muted);font-size:14px;margin-bottom:32px}
+  .platforms{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:480px;margin:0 auto}
+  .platform-chip{
+    display:flex;align-items:center;gap:8px;
+    background:var(--bg3);border:1px solid var(--border);
+    border-radius:12px;padding:12px 18px;
+    font-size:15px;font-weight:700;
+    transition:border-color .2s;
+  }
+  .platform-chip:hover{border-color:var(--gold3)}
+  .platform-chip .dot{width:8px;height:8px;border-radius:50%}
+
+  /* ── STEPS ── */
+  .steps{max-width:480px;margin:0 auto;display:flex;flex-direction:column;gap:16px}
+  .step{
+    display:flex;align-items:flex-start;gap:16px;
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:20px;
+  }
+  .step-num{
+    width:40px;height:40px;border-radius:10px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--gold),var(--gold3));
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:900;color:#000;
+  }
+  .step-title{font-weight:700;font-size:16px;margin-bottom:4px}
+  .step-desc{font-size:13px;color:var(--muted);line-height:1.6}
+
+  /* ── TESTIMONIALS MARQUEE ── */
+  .testimonials-wrap{overflow:hidden;padding:8px 0;position:relative}
+  .testimonials-wrap::before,.testimonials-wrap::after{
+    content:'';position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;
+  }
+  .testimonials-wrap::before{right:0;background:linear-gradient(to left,var(--bg),transparent)}
+  .testimonials-wrap::after{left:0;background:linear-gradient(to right,var(--bg),transparent)}
+  .marquee-track{
+    display:flex;gap:16px;
+    animation:marquee 28s linear infinite;
+    width:max-content;
+  }
+  .marquee-track:hover{animation-play-state:paused}
+  @keyframes marquee{
+    0%{transform:translateX(0)}
+    100%{transform:translateX(-50%)}
+  }
+  .tcard{
+    width:260px;flex-shrink:0;
+    background:var(--bg2);border:1px solid var(--border);
+    border-radius:var(--radius);padding:20px;
+  }
+  .tcard-top{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .tcard-avatar{
+    width:44px;height:44px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:18px;font-weight:700;color:#000;
+    background:linear-gradient(135deg,var(--gold),var(--gold2));
+  }
+  .tcard-name{font-weight:700;font-size:14px}
+  .tcard-earning{font-size:12px;margin-top:2px}
+  .tcard-text{font-size:13px;color:var(--muted);line-height:1.6}
+  .stars{color:var(--gold);font-size:14px;margin-bottom:8px}
+
+  /* ── BOTTOM CTA ── */
+  .bottom-cta{
+    text-align:center;padding:56px 20px 120px;
+    background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(212,175,55,.1) 0%,transparent 70%);
+  }
+  .bottom-cta h2{font-size:28px;font-weight:900;margin-bottom:10px}
+  .bottom-cta p{color:var(--muted);margin-bottom:32px;font-size:15px}
+
+  /* ── FIXED BOTTOM BAR ── */
+  .fixed-bar{
+    position:fixed;bottom:0;right:0;left:0;z-index:100;
+    padding:12px 20px 20px;
+    background:linear-gradient(to top,rgba(13,13,13,1) 60%,transparent);
+    display:flex;justify-content:center;
+  }
+  .fixed-bar .btn-wa{width:100%;max-width:480px;justify-content:center;font-size:17px;padding:15px 24px}
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:translateY(0)}}
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+  .reveal.visible{opacity:1;transform:none}
+
+  /* ── PULSE RING on WA button ── */
+  .btn-wa-wrap{position:relative;display:inline-block}
+  .pulse-ring{
+    position:absolute;inset:-6px;border-radius:50px;
+    border:2px solid rgba(37,211,102,.5);
+    animation:pulse-ring 2s ease-out infinite;
+  }
+  @keyframes pulse-ring{
+    0%{transform:scale(1);opacity:.6}
+    100%{transform:scale(1.08);opacity:0}
+  }
+
+  @media(max-width:360px){
+    .hero-title{font-size:28px}
+    .earning-pill .amount{font-size:22px}
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<header class="topbar">
+  <div class="topbar-logo"><span class="gold">متجرك</span></div>
+  <a class="topbar-wa" href="https://wa.me/212600000000?text=مرحباً،%20أريد%20فتح%20متجر%20إلكتروني" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.523 5.855L.057 23.428a.5.5 0 00.609.61l5.68-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.951 0-3.793-.5-5.405-1.375l-.387-.216-4.01 1.052 1.027-3.908-.233-.401A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    واتساب
+  </a>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge reveal"><span class="badge">🇲🇦 المغرب · فرصة حقيقية</span></div>
+    <h1 class="hero-title reveal">
+      افتح <span class="gold">متجرك الإلكتروني</span><br>وابدأ الربح اليوم
+    </h1>
+    <p class="hero-sub reveal">بدون خبرة · بدون رأس مال كبير · من هاتفك فقط</p>
+
+    <div class="hero-earnings reveal">
+      <div class="earning-pill">
+        <div class="amount gold">500</div>
+        <div class="label">درهم / يوم</div>
+      </div>
+      <div class="earning-arrow">←</div>
+      <div class="earning-pill">
+        <div class="amount gold">5,000</div>
+        <div class="label">درهم / يوم</div>
+      </div>
+    </div>
+
+    <div class="hero-cta reveal">
+      <div class="btn-wa-wrap">
+        <div class="pulse-ring"></div>
+        <a class="btn-wa" href="https://wa.me/212600000000?text=مرحباً،%20أريد%20فتح%20متجر%20إلكتروني" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.523 5.855L.057 23.428a.5.5 0 00.609.61l5.68-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.951 0-3.793-.5-5.405-1.375l-.387-.216-4.01 1.052 1.027-3.908-.233-.401A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          تواصل عبر واتساب الآن
+        </a>
+      </div>
+      <p class="hero-note">⚡ رد فوري · متاح 24/7</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats reveal">
+  <div class="stats-grid">
+    <div>
+      <div class="stat-num gold">+1200</div>
+      <div class="stat-lbl">متجر مفتوح</div>
+    </div>
+    <div>
+      <div class="stat-num gold">97%</div>
+      <div class="stat-lbl">معدل الرضا</div>
+    </div>
+    <div>
+      <div class="stat-num gold">48h</div>
+      <div class="stat-lbl">للإطلاق</div>
+    </div>
+  </div>
+</div>
+
+<!-- PLATFORMS -->
+<section class="section reveal">
+  <div class="container" style="max-width:480px;margin:0 auto">
+    <div class="section-title">نفتح متجرك على أكبر المنصات العالمية</div>
+    <div class="section-sub">بيع لملايين العملاء حول العالم</div>
+  </div>
+  <div class="platforms">
+    <div class="platform-chip"><div class="dot" style="background:#FF9900"></div>SOUQ</div>
+    <div class="platform-chip"><div class="dot" style="background:#E53238"></div>eBay</div>
+    <div class="platform-chip"><div class="dot" style="background:#F76B1C"></div>JUMIA</div>
+    <div class="platform-chip"><div class="dot" style="background:#222"></div>SHEIN</div>
+    <div class="platform-chip"><div class="dot" style="background:#FF6B35"></div>TEMU</div>
+    <div class="platform-chip"><div class="dot" style="background:#A100FF"></div>Amazon</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section reveal" style="background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)">
+  <div class="container" style="max-width:480px;margin:0 auto">
+    <div class="section-title">كيف يعمل؟</div>
+    <div class="section-sub">3 خطوات فقط وأنت تبيع</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">١</div>
+        <div>
+          <div class="step-title">تواصل معنا عبر واتساب</div>
+          <div class="step-desc">أرسل لنا رسالة الآن وسيرد عليك فريقنا خلال دقائق لشرح كل التفاصيل</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٢</div>
+        <div>
+          <div class="step-title">نفتح متجرك الإلكتروني</div>
+          <div class="step-desc">نتولى كل الإجراءات التقنية ونُنشئ متجرك الاحترافي على المنصة التي تختارها خلال 48 ساعة</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">٣</div>
+        <div>
+          <div class="step-title">ابدأ البيع وجنِ الأرباح</div>
+          <div class="step-desc">ندعمك في البداية ونرافقك في كل خطوة حتى تصبح مستقلاً بالكامل وتحقق دخلاً يومياً ثابتاً</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section reveal">
+  <div class="container" style="max-width:480px;margin:0 auto">
+    <div class="section-title">ماذا يقول عملاؤنا؟</div>
+    <div class="section-sub">آراء حقيقية من مغاربة حققوا نتائج</div>
+  </div>
+  <div class="testimonials-wrap">
+    <div class="marquee-track" id="marquee">
+      <!-- cards duplicated in JS for infinite loop -->
+    </div>
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section class="bottom-cta reveal">
+  <h2>جاهز تبدأ<span class="gold"> رحلتك؟</span></h2>
+  <p>انضم لأكثر من 1200 مغربي يربحون يومياً عبر متاجرهم الإلكترونية</p>
+  <div class="btn-wa-wrap">
+    <div class="pulse-ring"></div>
+    <a class="btn-wa" href="https://wa.me/212600000000?text=مرحباً،%20أريد%20فتح%20متجر%20إلكتروني" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" style="width:24px;height:24px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.523 5.855L.057 23.428a.5.5 0 00.609.61l5.68-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.951 0-3.793-.5-5.405-1.375l-.387-.216-4.01 1.052 1.027-3.908-.233-.401A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      تواصل عبر واتساب الآن
+    </a>
+  </div>
+  <p style="margin-top:12px;font-size:12px;color:var(--muted)">مجاني تماماً · بدون التزامات</p>
+</section>
+
+<!-- FIXED BOTTOM BAR -->
+<div class="fixed-bar">
+  <a class="btn-wa" href="https://wa.me/212600000000?text=مرحباً،%20أريد%20فتح%20متجر%20إلكتروني" target="_blank" rel="noopener" style="max-width:480px;width:100%;justify-content:center">
+    <svg viewBox="0 0 24 24" fill="currentColor" style="width:22px;height:22px"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.127.558 4.117 1.523 5.855L.057 23.428a.5.5 0 00.609.61l5.68-1.49A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.951 0-3.793-.5-5.405-1.375l-.387-.216-4.01 1.052 1.027-3.908-.233-.401A9.955 9.955 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+    تواصل عبر واتساب الآن
+  </a>
+</div>
+
+<script>
+// ── TESTIMONIALS DATA ──
+const TESTIMONIALS = [
+  {init:'ي',name:'يوسف العمراني',city:'الدار البيضاء',earning:'4,200 درهم/شهر',text:'"بدأت من الصفر وهم ساعدوني في كل شيء. الآن دخلي اليومي يتجاوز 140 درهم بشكل ثابت."'},
+  {init:'ف',name:'فاطمة الزهراء',city:'الرباط',earning:'3,800 درهم/شهر',text:'"لم أكن أعرف شيئاً عن التجارة الإلكترونية. الآن متجري يعمل وأنا مرتاحة في بيتي."'},
+  {init:'م',name:'محمد البوعناني',city:'مراكش',earning:'5,100 درهم/شهر',text:'"أحسن قرار اتخذته هذه السنة. الفريق محترف جداً والدعم مستمر حتى بعد الإطلاق."'},
+  {init:'س',name:'سارة المنصوري',city:'فاس',earning:'2,900 درهم/شهر',text:'"في أقل من أسبوع كان متجري جاهزاً. الآن أبيع كل يوم وأنا في المنزل."'},
+  {init:'أ',name:'أحمد التازي',city:'طنجة',earning:'6,500 تركت وظيفتي',text:'"تركت وظيفتي بعد 3 أشهر فقط. دخلي من المتجر أصبح ضعف راتبي السابق."'},
+  {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'3,200 درهم/شهر',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر كل شيء صار سهل وواضح."'},
+];
+
+// Build marquee (duplicated for infinite scroll)
+const track = document.getElementById('marquee');
+const allCards = [...TESTIMONIALS, ...TESTIMONIALS];
+allCards.forEach(t => {
+  const div = document.createElement('div');
+  div.className = 'tcard';
+  div.innerHTML = `
+    <div class="stars">★★★★★</div>
+    <div class="tcard-top">
+      <div class="tcard-avatar">${t.init}</div>
+      <div>
+        <div class="tcard-name">${t.name}</div>
+        <div class="tcard-earning" style="color:var(--gold);font-weight:700">${t.earning}</div>
+        <div style="font-size:11px;color:var(--muted)">${t.city}</div>
+      </div>
+    </div>
+    <div class="tcard-text">${t.text}</div>`;
+  track.appendChild(div);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, {threshold: 0.12});
+reveals.forEach(el => observer.observe(el));
+
+// ── COUNTER ANIMATION ──
+function animateCounter(el, end, duration=1400) {
+  let start = 0, step = end / (duration / 16);
+  const tick = () => {
+    start = Math.min(start + step, end);
+    el.textContent = Math.round(start).toLocaleString('ar-MA');
+    if(start < end) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+// Trigger counter when stats visible
+const statNums = document.querySelectorAll('.stat-num');
+const statsEl = document.querySelector('.stats');
+const statsObs = new IntersectionObserver(([e]) => {
+  if(e.isIntersecting) {
+    animateCounter(statNums[0], 1200);
+    statsObs.disconnect();
+  }
+}, {threshold: 0.5});
+if(statsEl) statsObs.observe(statsEl);
+</script>
+</body>
+</html>
