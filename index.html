@@ -63,23 +63,6 @@
     position:absolute;inset:0;width:100%;height:100%;
     pointer-events:none;z-index:0;
   }
-  .hero-logos-img{
-    width:100%;display:block;margin:0 auto 20px;
-    mask-image:linear-gradient(
-      to right,
-      transparent 0%,
-      black 8%,
-      black 92%,
-      transparent 100%
-    );
-    -webkit-mask-image:linear-gradient(
-      to right,
-      transparent 0%,
-      black 8%,
-      black 92%,
-      transparent 100%
-    );
-  }
   .hero>.container{position:relative;z-index:1}
   .hero-badge{margin-bottom:20px;animation:fadeDown .6s ease}
   .hero-title{
@@ -246,7 +229,12 @@
 <section class="hero">
   <canvas id="hero-canvas"></canvas>
   <div class="container">
-    <img src="logos.png" class="hero-logos-img" alt="SOUQ eBay JUMIA SHEIN TEMU" loading="eager">
+    <div class="hero-platform-banner reveal" style="margin-bottom:22px">
+      <img src="banner_final.jpg" alt="SOUQ eBay JUMIA SHEIN TEMU"
+        style="width:100%;max-width:420px;border-radius:14px;display:block;margin:0 auto;
+               box-shadow:0 4px 32px rgba(212,175,55,.18);"
+        loading="eager" decoding="async">
+    </div>
     <div class="hero-badge reveal"><span class="badge">🇲🇦 المغرب · فرصة حقيقية</span></div>
     <h1 class="hero-title reveal">
       افتح <span class="gold">متجرك الإلكتروني</span><br>وابدأ الربح اليوم
