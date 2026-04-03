@@ -150,12 +150,6 @@
   .marquee-track{
     display:flex;
     width:max-content;
-    animation:marquee-scroll 30s linear infinite;
-  }
-  .marquee-track:hover{animation-play-state:paused}
-  @keyframes marquee-scroll{
-    0%  {transform:translateX(0)}
-    100%{transform:translateX(-1656px)}
   }
   .tcard{
     width:260px;flex-shrink:0;
@@ -464,8 +458,23 @@ function buildCard(t) {
   return div;
 }
 
-// Two copies — CSS animation goes 0 → -50% = exactly one set, seamless loop
-[...TESTIMONIALS, ...TESTIMONIALS].forEach(t => track.appendChild(buildCard(t)));
+// Step 1: render first set only
+TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
+
+// Step 2: after paint, measure real width, then append second set and start loop
+setTimeout(() => {
+  const oneSetW = track.scrollWidth; // exact pixel width of 6 cards
+  TESTIMONIALS.forEach(t => track.appendChild(buildCard(t)));
+
+  let x = 0;
+  function tick() {
+    x += 0.5;
+    if (x >= oneSetW) x = 0;
+    track.style.transform = `translateX(-${x}px)`;
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}, 200);
 
 // ── SCROLL REVEAL ──
 const reveals = document.querySelectorAll('.reveal');
