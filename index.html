@@ -309,7 +309,7 @@
       </div>
       <div class="earning-arrow">←</div>
       <div class="earning-pill">
-        <div class="amount gold">5,000</div>
+        <div class="amount gold">5000</div>
         <div class="label">درهم / يوم</div>
       </div>
     </div>
@@ -495,10 +495,10 @@
 // ── TESTIMONIALS DATA ──
 const TESTIMONIALS = [
   {init:'ي',name:'يوسف العمراني',city:'الدار البيضاء',earning:'800 درهم/يوم',text:'"بدأت من الصفر وهم ساعدوني في كل شيء. الآن دخلي اليومي يتجاوز 800 درهم بشكل ثابت."'},
-  {init:'ف',name:'فاطمة الزهراء',city:'الرباط',earning:'1,200 درهم/يوم',text:'"لم أكن أعرف شيئاً عن التجارة الإلكترونية. الآن أربح أكثر من 1200 درهم في اليوم من بيتي."'},
-  {init:'م',name:'محمد البوعناني',city:'مراكش',earning:'3,500 درهم/يوم',text:'"أحسن قرار اتخذته هذه السنة. الفريق محترف جداً والدعم مستمر حتى بعد الإطلاق."'},
+  {init:'ف',name:'فاطمة الزهراء',city:'الرباط',earning:'1200 درهم/يوم',text:'"لم أكن أعرف شيئاً عن التجارة الإلكترونية. الآن أربح أكثر من 1200 درهم في اليوم من بيتي."'},
+  {init:'م',name:'محمد البوعناني',city:'مراكش',earning:'3500 درهم/يوم',text:'"أحسن قرار اتخذته هذه السنة. الفريق محترف جداً والدعم مستمر حتى بعد الإطلاق."'},
   {init:'س',name:'سارة المنصوري',city:'فاس',earning:'600 درهم/يوم',text:'"في أقل من أسبوع كان متجري جاهزاً. الآن أربح 600 درهم يومياً وأنا في المنزل."'},
-  {init:'أ',name:'أحمد التازي',city:'طنجة',earning:'5,000 درهم/يوم',text:'"تركت وظيفتي بعد 3 أشهر فقط. الآن أربح 5000 درهم في اليوم من متجري الإلكتروني."'},
+  {init:'أ',name:'أحمد التازي',city:'طنجة',earning:'5000 درهم/يوم',text:'"تركت وظيفتي بعد 3 أشهر فقط. الآن أربح 5000 درهم في اليوم من متجري الإلكتروني."'},
   {init:'خ',name:'خديجة أيت',city:'أكادير',earning:'900 درهم/يوم',text:'"كنت خايفة في البداية لكن مع دعمهم المستمر صرت أربح 900 درهم كل يوم بكل سهولة."'},
 ];
 
@@ -551,7 +551,7 @@ function animateCounter(el, end, duration=1400) {
   let start = 0, step = end / (duration / 16);
   const tick = () => {
     start = Math.min(start + step, end);
-    el.textContent = Math.round(start).toLocaleString('ar-MA');
+    el.textContent = '+' + Math.round(start);
     if(start < end) requestAnimationFrame(tick);
   };
   requestAnimationFrame(tick);
