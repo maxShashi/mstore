@@ -32,33 +32,6 @@
   .container{max-width:480px;margin:0 auto;padding:0 20px}
   .badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:12px;font-weight:700;border:1px solid var(--gold3);color:var(--gold2);background:rgba(212,175,55,.08);letter-spacing:.5px}
 
-  /* ── NOTICE TICKER ── */
-  .notice-ticker{
-    background:rgba(37,211,102,.08);
-    border-bottom:1px solid rgba(37,211,102,.2);
-    padding:10px 16px;
-    text-align:center;
-    font-size:13px;
-    color:#fff;
-    overflow:hidden;
-    min-height:42px;
-    display:flex;align-items:center;justify-content:center;
-    direction:rtl;
-    position:sticky;top:0;z-index:999;
-  }
-  .notice-inner{
-    display:inline-flex;align-items:center;gap:8px;
-    animation:tickerFade .5s ease;
-  }
-  @keyframes tickerFade{
-    from{opacity:0;transform:translateY(8px)}
-    to{opacity:1;transform:translateY(0)}
-  }
-  .notice-dot{
-    width:8px;height:8px;border-radius:50%;
-    background:var(--wa);flex-shrink:0;
-    animation:blink 1.2s infinite;
-  }
   @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
 
   /* ── HERO ── */
@@ -289,13 +262,6 @@
 </head>
 <body>
 
-<!-- NOTICE TICKER -->
-<div class="notice-ticker" id="noticeTicker">
-  <div class="notice-inner" id="noticeInner">
-    <div class="notice-dot"></div>
-    <span id="noticeText">جاري التحميل...</span>
-  </div>
-</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -592,47 +558,6 @@ if(statsEl) statsObs.observe(statsEl);
   }, 8000);
 })();
 
-// ── NOTICE TICKER: 60 Morocco phone numbers rotating every 6s ──
-(function(){
-  const PHONES = [
-    '+212 612-***-483','+212 754-***-217','+212 631-***-859','+212 782-***-064','+212 648-***-531',
-    '+212 713-***-926','+212 667-***-148','+212 735-***-473','+212 624-***-897','+212 791-***-352',
-    '+212 658-***-614','+212 742-***-039','+212 683-***-271','+212 717-***-845','+212 639-***-562',
-    '+212 764-***-193','+212 671-***-428','+212 726-***-751','+212 645-***-387','+212 783-***-916',
-    '+212 619-***-043','+212 757-***-682','+212 634-***-259','+212 778-***-514','+212 692-***-837',
-    '+212 741-***-126','+212 653-***-794','+212 715-***-361','+212 628-***-958','+212 769-***-247',
-    '+212 684-***-573','+212 732-***-819','+212 647-***-134','+212 793-***-462','+212 661-***-728',
-    '+212 724-***-095','+212 638-***-641','+212 755-***-382','+212 672-***-917','+212 719-***-253',
-    '+212 643-***-786','+212 786-***-124','+212 657-***-439','+212 731-***-872','+212 618-***-395',
-    '+212 763-***-541','+212 695-***-218','+212 744-***-963','+212 629-***-487','+212 771-***-836',
-    '+212 652-***-319','+212 783-***-074','+212 641-***-852','+212 718-***-437','+212 667-***-291',
-    '+212 734-***-658','+212 693-***-143','+212 759-***-826','+212 626-***-571','+212 747-***-384'
-  ];
-
-  // Shuffle once
-  for(let i = PHONES.length-1; i > 0; i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [PHONES[i], PHONES[j]] = [PHONES[j], PHONES[i]];
-  }
-
-  let idx = 0;
-  const textEl = document.getElementById('noticeText');
-  const innerEl = document.getElementById('noticeInner');
-
-  function showNext(){
-    const phone = PHONES[idx % PHONES.length];
-    const mins = 2 + Math.floor(Math.random()*48); // 2–49
-    textEl.innerHTML = `مستخدم <bdi dir="ltr">${phone}</bdi> قام بالاستفسار منذ ${mins} دقيقة`;
-    // restart fade animation
-    innerEl.style.animation = 'none';
-    void innerEl.offsetWidth; // reflow
-    innerEl.style.animation = 'tickerFade .5s ease';
-    idx++;
-  }
-
-  showNext();
-  setInterval(showNext, 5000);
-})();
 </script>
 </body>
 </html>
